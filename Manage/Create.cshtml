@@ -1,0 +1,26 @@
+﻿@page
+@model BonayogDianaFinalExam.Manage.CreateModel
+@{
+    <form method="POST">
+        <div class="form-group">
+            @Html.ValidationSummary()
+        </div>
+        <div class="form-group">
+            <label asp-for="Data.User!.Make">Make</label>
+            <input type="text" class="form-control" id="make" aria-describedby="UserMakeHelp" placeholder="Enter make" asp-for="Data.User!.Make">
+            <small id="UserMakeHelp" class="form-text text-muted"></small>
+        </div>
+        <div class="form-group">
+            <label asp-for="Data.User!.Manufacturer">Manufacturer</label>
+            <input type="text" class="form-control" id="manufacturer" aria-describedby="UserManufacturerHelp" placeholder="Enter manufacturer" asp-for="Data.User!.Manufacturer">
+            <small id="UserManufacturerHelp" class="form-text text-muted"></small>
+        </div>
+        <div class="form-group">
+            <label asp-for="Data.User!.Year">Year</label>
+            <input type="text" class="form-control" id="year" aria-describedby="UserYearHelp" placeholder="Enter year" asp-for="Data.User!.Year">
+            <small id="UserYearHelp" class="form-text text-muted">.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="~/manage/user" class="btn btn-secondary">Back</a>
+    </form>
+}

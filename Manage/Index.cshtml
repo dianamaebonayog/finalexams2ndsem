@@ -1,0 +1,126 @@
+﻿@page
+@model BonayogDianaFinalExam.Manage.Index
+@{
+}
+
+<h3>Cars</h3>
+
+<div class="search">
+    <i class="bi bi-search"></i>
+    <input type="text" class="form-control" placeholder="Search" id="search" value="@Model?.Data?.User?.Keyword">
+</div>
+
+<div class="row">
+    <div class="col-3">
+        <div class="form-group">
+            <label for="">Sort By</label>
+            <select class="form-control" id="sortBy" asp-for="Data.User.SortBy">
+                <option value="">choose</option>
+                <option value="name">Name</option>
+                <option value="description">Description</option>
+                <option value="abbreviation">Abbreviation</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="form-group">
+            <label for="">Sort Order</label>
+            <select class="form-control" id="sortOrder" asp-for="Data.User.SortOrder">
+                <option value="1">Ascending</option>
+                <option value="2">Descending</option>
+            </select>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-2">
+        <div class="form-group">
+            <a href="~/manage/User/create" class="form-control btn btn-success">Create</a>
+        </div>
+    </div>
+</div>
+
+
+@{
+    if (Model!.Data != null && Model.Data.User != null && Model.Data.User.Items != null && Model.Data.User.Items.Count > 0)
+    {
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Make</th>
+                    <th scope="col">Manufacturer</th>
+                    <th scope="col">Year</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var User in Model!.Data!.User!.Items)
+                    {
+                        <tr>
+                            <th scope="row">@User.Make</th>
+                            <td>@User.Manufacturer</td>
+                            <td>@User.Year</td>
+                            <td>
+                                <a href="~/manage/cars/update?id=@User.Id" class="btn btn-primary">Update</a>
+                                <a href="~/manage/cars/delete?id=@User.Id" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @{
+                    if (Model?.Data?.User.PageIndex > 1)
+                    {
+                        <li class="page-item"><a class="page-link" href="/manage/User?pageIndex=@(Model?.Data?.User.PageIndex-1)&pageSize=@(Model?.Data?.User.PageSize)&sortBy=@(Model?.Data?.User.SortBy)&sortOrder=@(Model?.Data?.User.SortOrder)">Previous</a></li>
+                    }
+
+                    <li class="page-item"><span class="page-link">page @Model?.Data?.User.PageIndex of @Model?.Data?.User.PageCount (@Model?.Data?.User.TotalRows total rows)</span></li>
+
+
+                    if (Model?.Data?.User.PageIndex < Model?.Data?.User.PageCount)
+                    {
+                        <li class="page-item"><a class="page-link" href="/manage/User?pageIndex=@(Model?.Data?.User.PageIndex+1)&pageSize=@(Model?.Data?.Cars.PageSize)&sortBy=@(Model?.Data?.User.SortBy)&sortOrder=@(Model?.Data?.User.SortOrder)">Next</a></li>
+                    }
+                }
+            </ul>
+        </nav>
+    }
+    else
+    {
+        <div>There are no records to show.</div>
+    }
+}
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+
+        });
+
+
+        $("#search").keyup(function (event) {
+            if (event.keyCode === 13) {
+                window.location = "/manage/User?keyword=" + $("#search").val();
+            }
+        });
+
+        $("#sortBy").change(function () {
+            window.location = "/manage/User?keyword=@(Model!.Data!.User!.Keyword)&sortBy=" + $("#sortBy").val() + "&sortOrder=" + $("#sortOrder").val();
+        });
+
+        $("#sortOrder").change(function () {
+            window.location = "/manage/User?keyword=@(Model!.Data!.User!.Keyword)&sortBy=" + $("#sortBy").val() + "&sortOrder=" + $("#sortOrder").val();
+        });
+
+        $("#roleId").change(function () {
+            window.location = "/manage/Users?keyword=@(Model!.Data!.User!.Keyword)&sortBy=" + $("#sortBy").val() + "&sortOrder=" + $("#sortOrder").val();
+        });
+    </script>
+}
